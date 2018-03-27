@@ -1,0 +1,19 @@
+<ol id="undevoured">
+</ol>
+<ol id="devoured">
+</ol>
+<script>
+	$(function(){
+		var burgerFalse = $("#undevoured");
+		var burgerTrue = $("#devoured");
+		$.ajax("/api/get",{
+			method:"GET"
+		}).then(function(data){
+			data.forEach(function(burger){
+				var newBurg=$("<li>").text(burger.burger_name).addClass("burger");
+				if (burger.devoured) burgerTrue.append(newBurg);
+				else burgerFalse.append(newBurg);
+			})
+		})
+	});
+</script>
