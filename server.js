@@ -1,12 +1,14 @@
 const express = require('express');
 const exphbs = require('express-handlebars')
 const app = express();
-const path = require('path');
+const bodyParser = require("body-parser");
 var router = require("./controllers/burgers_controller")
 var PORT = (process.env.PORT || 80);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+app.use("/api",router);
 app.engine("handlebars",exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
-app.use("/api",router);
 app.get("/",function(req,res){
 	res.render("index",null)
 })

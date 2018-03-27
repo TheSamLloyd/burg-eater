@@ -3,13 +3,19 @@ const router = express.Router();
 var burger = require("../models/burger.js");
 router.post('/new', (req,res)=>{
 	console.log("POST")
-	burger.newBurg(req.params.name, res);
+	burger.newBurg(req.body.newName, function(data){
+		res.send(data);
+	});
 });
 router.get('/get', (req,res)=>{
 	console.log("GET")
-	burger.getBurgs(res);
+	burger.getBurgs(function(data){
+		res.send(data)
+	});
 });
-router.put('/update', (req,res)=>{
-	burger.eatBurg(req.params.id, res);
+router.post('/update', (req,res)=>{
+	burger.eatBurg(req.body.burgId, function(data){
+		res.send(data)
+	});
 });
 module.exports = router;

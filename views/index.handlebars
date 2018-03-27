@@ -2,18 +2,45 @@
 </ol>
 <ol id="devoured">
 </ol>
+<form>
+	<input type="text" id="newBurg">
+	<input type="button" id="newBurgButton" value="New Burger">
+</form>
 <script>
 	$(function(){
+		burgGet();
+	});
+	$("#undevoured").on("click",".burgButton",function(){
+		console.log($(this).attr("burgId"))
+		var buttonId = $(this).attr("burgId")
+		$.post("/api/update", {"burgId":buttonId}
+			).then(function(data){
+			console.log(data)
+			burgGet();
+		})
+	})
+	$("#newBurgButton").on("click",function(){
+		$.post("/api/new", {newName:$("#newBurg").val()})
+		.then(function(data){
+			$("#newBurg").val("")
+			console.log(data);
+			burgGet();
+		})
+	})
+	function burgGet(){
 		var burgerFalse = $("#undevoured");
 		var burgerTrue = $("#devoured");
+		burgerFalse.empty();
+		burgerTrue.empty();
 		$.ajax("/api/get",{
 			method:"GET"
 		}).then(function(data){
 			data.forEach(function(burger){
 				var newBurg=$("<li>").text(burger.burger_name).addClass("burger");
+				var burgButton = $("<button>").text("Devour it!").attr("burgId",burger.id).addClass("burgButton")
 				if (burger.devoured) burgerTrue.append(newBurg);
-				else burgerFalse.append(newBurg);
+				else burgerFalse.append(newBurg.append(burgButton));
 			})
 		})
-	});
+	}
 </script>

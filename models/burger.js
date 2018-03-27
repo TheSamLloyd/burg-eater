@@ -1,12 +1,12 @@
 const orm = require("../config/orm.js");
 
-function getBurgs(res){
-	orm.selectAll();
+function getBurgs(cb){
+	orm.selectAll(cb);
 }
-function newBurg(name, res){
-	orm.insertOne(name);
+function newBurg(name, cb){
+	orm.insertOne(name, cb);
 }
-function eatBurg(id, res){
-	orm.updateOne(id, `"devoured"="true"`, res)
+function eatBurg(id, cb){
+	orm.updateOne(id, "`devoured`='1'", cb)
 }
 module.exports = {getBurgs, newBurg, eatBurg}
