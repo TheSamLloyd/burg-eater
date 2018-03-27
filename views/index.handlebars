@@ -1,11 +1,21 @@
-<ol id="undevoured">
-</ol>
-<ol id="devoured">
-</ol>
-<form>
-	<input type="text" id="newBurg">
-	<input type="button" id="newBurgButton" value="New Burger">
-</form>
+<div class="row">
+	<div class="col-md-6">
+		<ol id="undevoured" class="list-group">
+		</ol>
+	</div>
+	<div class="col-md-6">
+		<ol id="devoured" class="list-group">
+		</ol>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<form class="mx-auto">
+			<input type="text" id="newBurg">
+			<input type="button" id="newBurgButton" value="New Burger" class="btn">
+		</form>
+	</div>
+</div>
 <script>
 	$(function(){
 		burgGet();
@@ -36,8 +46,8 @@
 			method:"GET"
 		}).then(function(data){
 			data.forEach(function(burger){
-				var newBurg=$("<li>").text(burger.burger_name).addClass("burger");
-				var burgButton = $("<button>").text("Devour it!").attr("burgId",burger.id).addClass("burgButton")
+				var newBurg=$("<li>").text(burger.burger_name).addClass("burger").addClass("list-group-item");
+				var burgButton = $("<button>").text("Devour it!").attr("burgId",burger.id).addClass("burgButton").addClass("btn")
 				if (burger.devoured) burgerTrue.append(newBurg);
 				else burgerFalse.append(newBurg.append(burgButton));
 			})
